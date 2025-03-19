@@ -1,0 +1,8 @@
+<app-user-form-prime-flex></app-user-form-prime-flex>
+
+<div class="app-container" >
+    <app-user-form (userSubmitted)="onUserSubmitted($event)"></app-user-form>
+
+    <app-display-data *ngIf="name && age != null" [name]="name" [age]="age"></app-display-data>
+</div>
+<router-outlet />

@@ -1,7 +1,11 @@
 <mat-card class="data-card">
     <mat-card-title>Información Recibida</mat-card-title>
     <mat-card-content>
-        <p><strong>Nombre:</strong>{{ name }}</p>
-        <p><strong>Edad:</strong>{{ age }}</p>
+        <p><strong>Nombre:</strong>{{ user.name }}</p>
+        <p><strong>Apellido:</strong>{{ user.lastName }}</p>
+        <p><strong>Edad:</strong>{{ user.age }}</p>
+        <p><strong>Email:</strong>{{ user.email }}</p>
+        <p><strong>Contraseña:</strong> {{ user.password }}</p>
+        <p><strong>Confirmar Constraseña:</strong> {{ user.confirmPassword }}</p>
     </mat-card-content>
 </mat-card>

@@ -1,6 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {MatCardModule} from '@angular/material/card';
+import { UserDTO } from '../../interfaces/userDTO';
 
 @Component({
   selector: 'app-display-data',
@@ -10,8 +11,13 @@ import {MatCardModule} from '@angular/material/card';
   styleUrls: ['./display-data.component.css']
 })
 export class DisplayDataComponent {
-  @Input() name: string = '';
-  @Input() age: number | null = null;
-
-
+  @Input() user: UserDTO = {
+    name: '',
+    lastName: '',
+    age: 0,
+    email: '',
+    password: '',
+    confirmPassword: '',
+    lenguagues: []
+  }
 }

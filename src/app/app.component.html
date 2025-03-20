@@ -1,8 +1,10 @@
-<app-user-form-prime-flex></app-user-form-prime-flex>
-
-<div class="app-container" >
-    <app-user-form (userSubmitted)="onUserSubmitted($event)"></app-user-form>
-
-    <app-display-data *ngIf="name && age != null" [name]="name" [age]="age"></app-display-data>
+<div class="app-container">
+    <app-user-form-prime-flex (userSubmitted)="onUserSubmitted($event)"></app-user-form-prime-flex>
+    <app-display-data *ngIF = "user.name && user.lastName !== null && user.age && user.email && user.password && user.confirmPassword" [user] = "user"></app-display-data>
 </div>
+<div clas="app-container">
+    <app-user-form (userSubmitted)="onUserSubmitted($event)"></app-user-form>
+    <app-display-data *ngIf = "user.name && user.lastName !== null && user.age && user.email && user.password && user.confirmPassword" [user] = "user"></app-display-data>  
+</div>
+
 <router-outlet />

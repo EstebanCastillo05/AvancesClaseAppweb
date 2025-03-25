@@ -1,0 +1,47 @@
+<div class="grid justify-content-center">
+    <mat-card class="col-6">
+        <div class="grid">
+            <div class="col-12 flex justify-content-center">
+                <h2>Iniciar Sesión</h2>
+            </div>
+        </div>
+
+        <form (ngSubmit)="onLogin()">
+            <div class="grid">
+                <div class="col-3"></div>
+                <div class="col-6">
+                    <mat-form-field appearance="outline" style="width: 100% !important;">
+                        <mat-label>Usuario</mat-label>
+                        <input matInput [(ngModel)]="loginData.username" name="username" required />
+                    </mat-form-field>
+                </div>
+                <div class="col-3"></div>
+
+                <div class="col-3"></div>
+                <div class="col-6">
+                    <mat-form-field appearance="outline" style="width: 100% !important;">
+                        <mat-label>Contraseña</mat-label>
+                        <input matInput type="password" [(ngModel)]="loginData.password" name="password" required />
+                    </mat-form-field>
+                </div>
+                <div class="col-3"></div>
+
+                <div class="col-3"></div>
+                <div class="col-6">
+                    <button mat-raised-button color="primary" type="submit" class="w-full">Iniciar Session</button>
+                </div>
+                <div class="col-3"></div>
+
+                <div class="col-3"></div>
+                <div class="col-6">
+                    <button mat-raised-button color="accent" type="button" (click)="Registrarse()" style="width: 100%;">Registrarse</button>
+                </div>
+                <div class="col-3"></div>
+
+                <div class="col-12 text-center text-red-500 mt-2" *ngIf="errorMessage">
+                    {{ errorMessage }}
+                </div>
+            </div>
+        </form>
+    </mat-card>
+</div>

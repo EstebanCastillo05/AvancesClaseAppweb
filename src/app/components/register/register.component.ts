@@ -9,15 +9,15 @@ import { UserDTO } from '../../interfaces/userDTO';
 
 
 @Component({
-  selector: 'app-register',
-  standalone: true,
-  imports: [CommonModule, MatInputModule, MatFormFieldModule, MatButtonModule, FormsModule, MatCardModule,],
-  templateUrl: './register.component.html',
-  styleUrl: './register.component.css'
-})
-export class RegisterComponent {
-
-    userObj: UserDTO = {
+    selector: 'app-register',
+    standalone: true,
+    imports: [CommonModule, MatInputModule, MatFormFieldModule, MatButtonModule, FormsModule, MatCardModule],
+    templateUrl: './register.component.html',
+    styleUrls: ['./register.component.css']
+  })
+  export class RegisterComponent {
+  
+      userObj: UserDTO = {
           name: '',
           lastName: '',
           age: 0,
@@ -25,22 +25,50 @@ export class RegisterComponent {
           password: '',
           confirmPassword: '',
           lenguagues: []
-    };
+      };
   
-    @Output() userSubmitted = new EventEmitter<UserDTO>();
+      passwordMismatch: boolean = false;
   
-    submitForm() {
-        if (this.userObj.name && this.userObj.age !== null && this.userObj.email && this.userObj.lastName && this.userObj.password && this.userObj.confirmPassword) {
-            this.userSubmitted.emit( this.userObj );
-            this.userObj = {
-                name: '',
-                lastName: '',
-                age: 0,
-                email: '',
-                password: '',
-                confirmPassword: '',
-                lenguagues: []
-            }
-        }
-    }  
-}
+      @Output() userSubmitted = new EventEmitter<UserDTO>();
+  
+      // Método para validar si las contraseñas coinciden
+      validatePassword() {
+          this.passwordMismatch = this.userObj.password !== this.userObj.confirmPassword;
+      }
+  
+      // Método para manejar el submit del formulario
+      submitForm(userForm: any) {
+          this.validatePassword();
+  
+          // Si las contraseñas no coinciden o el formulario es inválido, no enviar el formulario
+          if (this.passwordMismatch || userForm.invalid) {
+              return;
+          }
+  
+          // Emite el objeto userObj si el formulario es válido
+          if (this.userObj.name && this.userObj.lastName && this.userObj.email && this.userObj.password && this.userObj.confirmPassword) {
+              this.userSubmitted.emit(this.userObj);
+  
+              // Limpia los campos del formulario después de enviarlo
+              this.resetForm(userForm);
+          }
+      }
+  
+      // Restablece el formulario después del envío
+      resetForm(userForm: any) {
+          this.userObj = {
+              name: '',
+              lastName: '',
+              age: 0,
+              email: '',
+              password: '',
+              confirmPassword: '',
+              lenguagues: []
+          };
+  
+          this.passwordMismatch = false;
+          
+          // Resetea el formulario y su estado de validación
+          userForm.resetForm();
+      }
+  }

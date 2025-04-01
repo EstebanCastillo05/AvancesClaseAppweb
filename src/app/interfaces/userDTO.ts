@@ -13,3 +13,24 @@ export interface lenguage {
     name: string;
     code: string;
 }
+
+export interface LoginDTO {
+    user: string;
+    password: string;
+}
+
+export interface User {
+    id?: number;
+    username: string;
+    names: string;
+    lastnames: string;
+    age: number;
+    gender: string;
+    password: string;
+    email: string;
+}
+
+export interface Login {
+    username: string;
+    password: string;
+}

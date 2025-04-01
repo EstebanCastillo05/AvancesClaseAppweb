@@ -3,7 +3,7 @@
     <mat-card class="col-6">
         <div class="grid">
             <div class="col-3"></div>
-            <div class="col-6" style="justify-content: center; align-items: center; display: flex;">
+            <div class="col-6" style="display: flex; justify-content: center; align-items: center;">
                 <h2>Registro de Usuario</h2>
             </div>
             <div class="col-3"></div>
@@ -13,10 +13,27 @@
             <div class="grid">
                 <div class="col-3"></div>
                 <div class="col-6">
-                    <mat-form-field appearance="outline" style="width: 100% !important;">
+                    <mat-form-field appearance="outline" style="width: 100%;">
+                        <mat-label>Usuario</mat-label>
+                        <input matInput [(ngModel)]="userCreate.username" name="username" required />
+                    </mat-form-field>
+                </div>
+                <div class="col-3"></div>
+        
+                <div class="col-3"></div>
+                <div class="col-6">
+                    <mat-form-field appearance="outline" style="width: 100%;">
                         <mat-label>Nombre</mat-label>
-                        <input matInput [(ngModel)]="userObj.name" name="name" required #name="ngModel" />
-                        <mat-error *ngIf="name.invalid && name.touched">El nombre es requerido</mat-error>
+                        <input matInput [(ngModel)]="userCreate.names" name="names" required />
+                    </mat-form-field>
+                </div>
+                <div class="col-3"></div>
+        
+                <div class="col-3"></div>
+                <div class="col-6">
+                    <mat-form-field appearance="outline" style="width: 100%;">
+                        <mat-label>Apellido</mat-label>
+                        <input matInput [(ngModel)]="userCreate.lastnames" name="lastnames" required />
                     </mat-form-field>
                 </div>
                 <div class="col-3"></div>
@@ -24,28 +41,8 @@
                 <div class="col-3"></div>
                 <div class="col-6">
                     <mat-form-field appearance="outline" style="width: 100% !important;">
-                        <mat-label>Apellido</mat-label>
-                        <input matInput [(ngModel)]="userObj.lastName" name="lastName" required #lastName="ngModel" />
-                        <mat-error *ngIf="lastName.invalid && lastName.touched">El apellido es requerido</mat-error>
-                    </mat-form-field>
-                </div>
-                <div class="col-3"></div>
-      
-                <div class="col-3"></div>
-                <div class="col-6">
-                    <mat-form-field appearance="outline" style="width: 100% !important;">
-                        <mat-label>Edad</mat-label>
-                        <input matInput type="number" [(ngModel)]="userObj.age" name="age" required #age="ngModel" />
-                        <mat-error *ngIf="age.invalid && age.touched">La edad es requerida</mat-error>
-                    </mat-form-field>
-                </div>
-                <div class="col-3"></div>
-      
-                <div class="col-3"></div>
-                <div class="col-6">
-                    <mat-form-field appearance="outline" style="width: 100% !important;">
                         <mat-label>Email</mat-label>
-                        <input matInput type="email" [(ngModel)]="userObj.email" name="email" required #email="ngModel" pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$" />
+                        <input matInput type="email" [(ngModel)]="userCreate.email" name="email" required #email="ngModel"/>
                         <mat-error *ngIf="email.invalid && email.touched">Ingrese un email válido</mat-error>
                     </mat-form-field>
                 </div>
@@ -53,32 +50,55 @@
         
                 <div class="col-3"></div>
                 <div class="col-6">
-                    <mat-form-field appearance="outline" style="width: 100% !important;">
+                    <mat-form-field appearance="outline" style="width: 100%;">
+                        <mat-label>Edad</mat-label>
+                        <input matInput type="number" [(ngModel)]="userCreate.age" name="age" required min="0" />
+                    </mat-form-field>
+                </div>
+                <div class="col-3"></div>
+        
+                <div class="col-3"></div>
+                <div class="col-6">
+                    <mat-form-field appearance="outline" style="width: 100%;">
+                        <mat-label>Género</mat-label>
+                        <mat-select [(ngModel)]="userCreate.gender" name="gender" required>
+                            <mat-option value="Masculino">Masculino</mat-option>
+                            <mat-option value="Femenino">Femenino</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <div class="col-3"></div>
+        
+                <div class="col-3"></div>
+                <div class="col-6">
+                    <mat-form-field appearance="outline" style="width: 100%;">
                         <mat-label>Contraseña</mat-label>
-                        <input matInput type="password" [(ngModel)]="userObj.password" name="password" required #password="ngModel" minlength="6" (ngModelChange)="validatePassword()" />
-                        <mat-error *ngIf="password.invalid && password.touched">Debe tener al menos 6 caracteres</mat-error>
+                        <input matInput type="password" [(ngModel)]="userCreate.password" name="password" required #password="ngModel"/>
+                        <mat-error *ngIf="password.invalid && password.touched">La contraseña es obligatoria</mat-error>
                     </mat-form-field>
                 </div>
                 <div class="col-3"></div>
-
+        
                 <div class="col-3"></div>
                 <div class="col-6">
-                    <mat-form-field appearance="outline" style="width: 100% !important;">
+                    <mat-form-field appearance="outline" style="width: 100%;">
                         <mat-label>Confirmar Contraseña</mat-label>
-                        <input matInput type="password" [(ngModel)]="userObj.confirmPassword" name="confirmPassword" required #confirmPassword="ngModel" (ngModelChange)="validatePassword()" />
-                        <mat-error *ngIf="passwordMismatch">Las contraseñas deben coincidir</mat-error>
+                        <input matInput type="password" [(ngModel)]="confirmPassword" name="confirmPassword" required 
+                               (ngModelChange)="validatePassword()" #confirmPasswordField="ngModel"/>
+                        <mat-error *ngIf="passwordMismatch && confirmPasswordField.touched">Las contraseñas no coinciden</mat-error>
                     </mat-form-field>
                 </div>
                 <div class="col-3"></div>
 
                 <div class="col-3"></div>
                 <div class="col-6">
-                    <button mat-raised-button color="primary" type="submit" style="width: 100%;" [disabled]="userForm.invalid || passwordMismatch">
+                    <button mat-raised-button color="primary" type="submit" style="width: 100%;" [disabled]="passwordMismatch || userForm.invalid">
                         Enviar
                     </button>
                 </div>
                 <div class="col-3"></div>
             </div>
         </form>
+        
     </mat-card>
 </div>

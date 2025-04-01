@@ -3,62 +3,61 @@ import { CommonModule } from '@angular/common';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatButtonModule } from '@angular/material/button';
-import { FormsModule } from '@angular/forms';
-import { UserDTO } from '../../interfaces/userDTO';
-import { NgForm } from '@angular/forms';  
+import { MatCardModule } from '@angular/material/card';  
+import { FormsModule, NgForm } from '@angular/forms';
+import { User } from '../../interfaces/userDTO';
 
 @Component({
   selector: 'app-user-form',
   standalone: true,
-  imports: [CommonModule, MatInputModule, MatFormFieldModule, MatButtonModule, FormsModule],
+  imports: [CommonModule, MatInputModule, MatFormFieldModule, MatButtonModule, MatCardModule, FormsModule], 
   templateUrl: './user-form.component.html',
   styleUrls: ['./user-form.component.css']
 })
 export class UserFormComponent {
-  @Output() userSubmitted = new EventEmitter<UserDTO>();
+  @Output() userSubmitted = new EventEmitter<User>();
 
-  userObj: UserDTO = {
-      name: '',
-      lastName: '',
+  userObj: User = {
+      id: 0,
+      username: '',
+      names: '',
+      lastnames: '',
       age: 0,
       email: '',
-      password: '',
-      confirmPassword: '',
-      lenguagues: []
+      gender: '',
+      password: ''
   };
 
+  confirmPassword: string = '';
   passwordMismatch: boolean = false;
-  // Valida si las contraseñas sean iguales
+
   validatePassword() {
-      this.passwordMismatch = this.userObj.password !== this.userObj.confirmPassword;
+      this.passwordMismatch = this.userObj.password !== this.confirmPassword;
   }
 
   submitForm(userForm: NgForm) {
-      this.validatePassword(); 
+      this.validatePassword();
 
-      if (this.passwordMismatch) {
+      if (this.passwordMismatch || userForm.invalid) {
           return;
       }
 
-      if (this.userObj.name && this.userObj.lastName && this.userObj.age && this.userObj.email && this.userObj.password && this.userObj.confirmPassword) {
-        this.userSubmitted.emit(this.userObj);
-        this.resetForm(userForm);
-    }
+      this.userSubmitted.emit(this.userObj);
+      this.resetForm(userForm);
   }
 
-  // Restablece el formulario después del envío 
   resetForm(userForm: NgForm) {
-    this.userObj = {
-        name: '',
-        lastName: '',
-        age: 0,
-        email: '',
-        password: '',
-        confirmPassword: '',
-        lenguagues: []
-    };
-    this.passwordMismatch = false;
-    // Resetea el formulario
-    userForm.resetForm();
+      this.userObj = {
+          username: '',
+          names: '',
+          lastnames: '',
+          age: 0,
+          email: '',
+          gender: '',
+          password: ''
+      };
+      this.confirmPassword = '';
+      this.passwordMismatch = false;
+      userForm.resetForm();
   }
 }

@@ -1,41 +1,49 @@
 import { Component } from '@angular/core';
 import { RegisterComponent } from '../register/register.component';
 import { CommonModule } from '@angular/common';
-import { UserDTO } from '../../interfaces/userDTO';
+import { User } from '../../interfaces/userDTO';
 import { Router } from '@angular/router';
-
+import { UserService } from '../../services/user.service';  
 
 @Component({
   selector: 'app-register-page',
-  imports: [RegisterComponent,CommonModule ],
+  standalone: true,
+  imports: [RegisterComponent, CommonModule],
   templateUrl: './register-page.component.html',
-  styleUrl: './register-page.component.css'
+  styleUrls: ['./register-page.component.css']
 })
-
-
 export class RegisterPageComponent {
 
-  constructor(private router: Router) { }
+  constructor(private router: Router, private userService: UserService) { }
 
-  user: UserDTO = {
-    name: '',
-    lastName: '',
+  user: User = {
+    username: '',
+    names: '',
+    lastnames: '',
     age: 0,
     email: '',
-    password: '', 
-    confirmPassword: '',  
-    lenguagues: []
+    gender: '',
+    password: ''
   };
-  
-    onUserSubmitted(userData: UserDTO) {
-      this.user = userData; 
-      console.log(this.user);
-      this.router.navigate(['/login']).then(success => {
-        if (success) {
-          console.log('navigation success');
-        } else {
-          console.log('navigation failed');
-        }
-      });
-    }
+
+  // Esta funcion solo se activa al enviar el formulario
+  onUserSubmitted(userData: User) {
+    this.user = { ...userData };  
+    console.log("Usuario registrado:", this.user);
+    this.userService.create(this.user).subscribe(     // Llamada al servicio para enviar los datos al backend
+      (response) => {
+        console.log('Usuario creado correctamente:', response);
+        this.router.navigate(['/login']).then(success => {
+          if (success) {
+            console.log('Navegación exitosa al login');
+          } else {
+            console.error('Error en la navegación');
+          }
+        });
+      },
+      (error) => {
+        console.error('Error al crear el usuario:', error);
+      }
+    );
   }
+}
